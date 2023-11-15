@@ -9,7 +9,6 @@
     <meta name="author" content="AdminKit">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @vite('resources/sass/app.scss')
-    @vite('resources/css/theme.css')
     @yield('css-files')
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -43,6 +42,7 @@
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
+                                <a class="dropdown-item" href="{{ route('employees.create') }}">Dodaj pracownika </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf

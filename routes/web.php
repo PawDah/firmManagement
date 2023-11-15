@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,11 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function (){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-//    Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
-//    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-//    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-//    Route::delete('/cart/{product}',[CartController::class,'destroy'])->name('cart.destroy');
-//    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::resource('employees',EmployeesController::class);
 });
 
 Auth::routes();
