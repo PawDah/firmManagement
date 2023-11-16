@@ -22,6 +22,10 @@ Route::middleware(['auth'])->group(function (){
     Route::resource('employees',EmployeesController::class);
 });
 
-Auth::routes();
+Auth::routes([
+    'register' => false,
+    'reset' => false,
+    'verify' => false,
+]);
 
 
