@@ -24,7 +24,9 @@ class EmployeePostRequest extends FormRequest
         return [
             'name' => 'required|max:50',
             'surname' => 'required|max:50',
+            'phone_number' =>'max:11',
             'email' => 'required|email',
+            'image'=>'nullable|image|mimes:jpg,png',
             'hire_date' => 'required|date',
         ];
     }
