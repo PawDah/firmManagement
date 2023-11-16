@@ -7,6 +7,7 @@ use App\Models\Employee;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeesController extends Controller
 {
@@ -35,6 +36,9 @@ class EmployeesController extends Controller
     public function store(EmployeePostRequest $request): RedirectResponse
     {
         $employee=new Employee($request->validated());
+        if ($request->hasFile('image')){
+            $employee->image_path=$request->file('image')->store('employees');
+        }
         $employee->save();
         return redirect(route('employees.index'))->with('status','Użytkownik Dodany!');
     }
@@ -42,39 +46,41 @@ class EmployeesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): View
+    public function show(Employee $employee): View
     {
         return view('employees.show',[
-            'employee' => Employee::find($id)
+            'employee' => $employee
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) : View
+    public function edit(Employee $employee) : View
     {
         return view('employees.edit',[
-          'employee' => Employee::find($id)
+          'employee' => $employee
     ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeePostRequest $request, string $id): RedirectResponse
+    public function update(EmployeePostRequest $request, Employee $employee): RedirectResponse
     {
-        if (Employee::where('id',$id)->exists()) {
-            $employee = Employee::find($id);
-            $employee->fill($request->validated());
+        $employee->fill($request->validated());
+        if ($request->hasFile('image')){
+            $oldImagePath = $employee->image_path;
+            if($oldImagePath){
+                if (Storage::exists($oldImagePath)) {
+                    Storage::delete($oldImagePath);
+                }
+            }
+            $employee->image_path=$request->file('image')->store('products');
+        }
+
             $employee->save();
             return redirect(route('employees.index'))->with('status','Użytkownik edytowany!');
-        }
-        else{
-            return redirect(route('employees.index'))->with('status','Użytkownik nieznaleziony!');
-        }
-
-
     }
 
     /**

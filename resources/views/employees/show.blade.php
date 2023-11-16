@@ -8,7 +8,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-{{--                            <img src="{{asset('employees/'. $employee->image_path)}}" alt="Zdjęcie Pracownika" class="rounded-circle" width="150">--}}
+                            <img src="{{asset('storage/'. $employee->image_path)}}" alt="Zdjęcie Pracownika" class="rounded-circle" width="150">
                             <div class="mt-3">
                                 <h4>{{$employee->name}} {{$employee->surname}}</h4>
                                 <p class="text-secondary mb-1"></p>
