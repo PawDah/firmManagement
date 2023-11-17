@@ -6,7 +6,6 @@ use App\Http\Requests\EmployeePostRequest;
 use App\Models\Employee;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class EmployeesController extends Controller
@@ -18,6 +17,7 @@ class EmployeesController extends Controller
     {
         return view('employees.index',[
             'employees' => Employee::paginate(10)
+
         ]);
     }
 
@@ -76,7 +76,7 @@ class EmployeesController extends Controller
                     Storage::delete($oldImagePath);
                 }
             }
-            $employee->image_path=$request->file('image')->store('products');
+            $employee->image_path=$request->file('image')->store('employees');
         }
 
             $employee->save();
