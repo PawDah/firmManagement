@@ -14,7 +14,6 @@
                 <th scope="col">Imię</th>
                 <th scope="col">Nazwisko</th>
                 <th scope="col">Numer Telefonu</th>
-                <th scope="col">Data zatrudnienia</th>
                 <th scope="col">Numer umowy</th>
                 <th scope="col">Akcje</th>
             </tr>
@@ -28,7 +27,6 @@
                         <td>{{$employee->name}}</td>
                         <td>{{$employee->surname}}</td>
                         <td>+48 {{$employee->phone_number}}</td>
-                        <td>{{$employee->hire_date}}</td>
                         <td>@if($employee->hasContract())
                                 {{$employee->contract->id}}
                             @else

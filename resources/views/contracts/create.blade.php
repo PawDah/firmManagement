@@ -5,24 +5,17 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Edycja Pracownika</div>
-                    <div class="d-flex flex-column align-items-center mt-3">
-                            <div class="card-body">
-                                <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="{{asset('storage/'. $employee->image_path)}}" alt="Zdjęcie Pracownika" class="rounded-circle" width="250">
-                                </div>
-                            </div>
-                    </div>
+                    <div class="card-header">Dodawanie Umowy</div>
+
                     <div class="card-body">
-                        <form method="POST" action="{{ route('employees.update',$employee->id) }}" enctype="multipart/form-data" >
+                        <form method="POST" action="{{ route('contracts.store') }}" >
                             @csrf
-                            @method('PUT')
-                            <div class="row mb-3">
-                                <label for="name" class="col-md-4 col-form-label text-md-end">Imię</label>
 
+                            <div class="row mb-3">
+                                <label for="contract_details" class="col-md-4 col-form-label text-md-end">Opis stanowiska</label>
                                 <div class="col-md-6">
-                                    <input id="name" type="text" maxlength="50" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$employee->name}}" required autocomplete="name" autofocus>
-                                    @error('name')
+                                    <textarea id="contract_details" maxlength="500" class="form-control @error('contract_details') is-invalid @enderror" name="contract_details" required autocomplete="contract_details" autofocus></textarea>
+                                    @error('contract_details')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -31,12 +24,12 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="surname" class="col-md-4 col-form-label text-md-end">Nazwisko</label>
+                                <label for="payment_amount" class="col-md-4 col-form-label text-md-end">Wynagrodzenie (Brutto)</label>
 
                                 <div class="col-md-6">
-                                    <input id="surname" maxlength="50" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" required  autofocus value="{{$employee->surname}}">
+                                    <input id="payment_amount" max="99999.99" type="number" class="form-control @error('surname') is-invalid @enderror" name="payment_amount" required  autofocus value="{{ old('payment_amount') }}">
 
-                                    @error('surname')
+                                    @error('payment_amount')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -44,25 +37,10 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="phone_number" class="col-md-4 col-form-label text-md-end">Numer Telefonu</label>
-
+                                <label for="start_date" class="col-md-4 col-form-label text-md-end">Data Rozpoczęcia Umowy</label>
                                 <div class="col-md-6">
-                                    <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ $employee->phone_number }}" required autocomplete="name" autofocus>
-                                    @error('phone_number')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$employee->email}}" required autocomplete="email">
-
-                                    @error('email')
+                                    <input id="start_date" type="date" class="form-control @error('start_date') is-invalid @enderror" name="start_date" value="{{date('Y-m-d')}}" required autocomplete="start_date">
+                                    @error('start_date')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -70,19 +48,34 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="image" class="col-md-4 col-form-label text-md-end">Grafika</label>
-
+                                <label for="end_date" class="col-md-4 col-form-label text-md-end">Data Zakończenia umowy</label>
                                 <div class="col-md-6">
-                                    <input id="image" type="file"  class="form-control @error('image') is-invalid @enderror" name="image">
-                                    @error('image')
+                                    <input id="end_date" type="date" class="form-control @error('end_date') is-invalid @enderror" name="end_date" autocomplete="end_date">
+                                    @error('end_date')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <label for="contract_type" class="col-md-4 col-form-label text-md-end">Typ umowy</label>
+                                <div class="col-md-6">
+                                    <select id="contract_type" class="form-control @error('contract_type') is-invalid @enderror" name="contract_type_id" >
+                                        @foreach($contract_types as $type)
+                                            <option value="{{$type->id}}" >{{$type->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('contract_type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <input id="employee_id" class="form-control @error('hire_date') is-invalid @enderror" name="employee_id" value="{{$employee->id}}" required hidden autocomplete="employee_id">
                             <div class="row mb-0">
-                                <div class="d-flex flex-column align-items-center">
+                                <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
                                         Zapisz
                                     </button>

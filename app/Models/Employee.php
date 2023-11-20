@@ -19,7 +19,6 @@ class Employee extends Model
         'phone_number',
         'email',
         'image_path',
-        'hire_date',
     ];
 
     public function hasContract(): bool

@@ -60,7 +60,7 @@ class EmployeesController extends Controller
     {
         return view('employees.edit',[
           'employee' => $employee
-    ]);
+            ]);
     }
 
     /**

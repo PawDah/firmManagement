@@ -70,6 +70,19 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
+                                <label for="hire_date" class="col-md-4 col-form-label text-md-end">Data Zatrudnienia</label>
+
+                                <div class="col-md-6">
+                                    <input id="hire_date" type="date" class="form-control @error('hire_date') is-invalid @enderror" name="hire_date" value="{{$employee->hire_date}}" required autocomplete="hire_date">
+
+                                    @error('hire_date')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
                                 <label for="image" class="col-md-4 col-form-label text-md-end">Grafika</label>
 
                                 <div class="col-md-6">

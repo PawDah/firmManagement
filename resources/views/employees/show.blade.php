@@ -46,15 +46,6 @@
                                     +48 {{$employee->phone_number}}
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0">Data zatrudnienia</h6>
-                                </div>
-                                <div class="col-sm-6 text-secondary">
-                                    {{$employee->hire_date}}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -136,9 +127,6 @@
                                             {{$employee->contract->end_date}}
                                         </div>
                                     </div>
-                                @else
-                                    <h4 class="text-bg-danger"> Brak umowy !</h4>
-                                @endif
                             </div>
                             <div class="col-md-5 border-start border-1">
                                 <div class="row mt-4">
@@ -147,6 +135,15 @@
                                     </div>
                                 </div>
                             </div>
+                            @else
+                                <h4 class="text-danger"> Brak umowy !</h4>
+                                <a style="text-decoration: none;" href="{{route('contracts.create',$employee->id)}}">
+                                    <button class="btn btn-info">
+                                        Dodaj umowę dla pracownika
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
