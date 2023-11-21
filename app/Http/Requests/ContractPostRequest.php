@@ -25,7 +25,7 @@ class ContractPostRequest extends FormRequest
             'contract_details' => 'required|max:500',
             'payment_amount' => 'required|numeric|between:0,99999.99',
             'start_date' => 'required|date',
-            'end_date' => 'date',
+            'end_date' => 'date|nullable',
             'employee_id' =>'integer|min:0',
             'contract_type_id' => 'integer|min:0'
         ];

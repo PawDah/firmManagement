@@ -17,9 +17,9 @@ class ContractController extends Controller
      */
     public function index(): View
     {
-        return view('contracts.index',[
-                    'contracts' => Contract::paginate(10)
-                ]);
+        return view('contracts.index', [
+            'contracts' => Contract::paginate(10)
+        ]);
     }
 
     /**
@@ -27,10 +27,10 @@ class ContractController extends Controller
      */
     public function create(string $employee_id): View
     {
-        $employee=Employee::find($employee_id);
-        return view('contracts.create',[
-                'employee' => $employee,
-                'contract_types' => ContractType::all()
+        $employee = Employee::find($employee_id);
+        return view('contracts.create', [
+            'employee' => $employee,
+            'contract_types' => ContractType::all()
         ]);
     }
 
@@ -42,7 +42,7 @@ class ContractController extends Controller
 
         $contract = new Contract($request->validated());
         $contract->save();
-        return redirect(route('contracts.index'))->with('status','Umowa Dodana!');
+        return redirect(route('contracts.index'))->with('status', 'Umowa Dodana!');
     }
 
     /**
@@ -50,7 +50,7 @@ class ContractController extends Controller
      */
     public function show(Contract $contract): View
     {
-        return view('contracts.show',[
+        return view('contracts.show', [
             'contract' => $contract
         ]);
     }
@@ -60,8 +60,9 @@ class ContractController extends Controller
      */
     public function edit(Contract $contract): View
     {
-        return view('contracts.edit',[
-            'contract' => $contract
+        return view('contracts.edit', [
+            'contract' => $contract,
+            'contract_types' => ContractType::all()
         ]);
     }
 
@@ -70,10 +71,9 @@ class ContractController extends Controller
      */
     public function update(ContractPostRequest $request, Contract $contract)
     {
-        // TO DO ANEKS DO UMOWY NOWA UMOWA PLUS USNIECIE POPRZEDNIEJ
         $contract->fill($request->validated());
         $contract->save();
-        return redirect(route('contracts.index'))->with('status','Umowa edytowana!');
+        return redirect(route('contracts.show',$contract->id))->with('status', 'Umowa edytowana!');
     }
 
     /**
@@ -89,5 +89,6 @@ class ContractController extends Controller
         else{
             return redirect(route('contracts.index'))->with('status','Umowa nieznaleziona!');
         }
+
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Storage;
 
 class Employee extends Model
 {
@@ -24,6 +25,10 @@ class Employee extends Model
     public function hasContract(): bool
     {
         return isset($this->contract);
+    }
+    public function localFileExists(): bool
+    {
+        return Storage::exists($this->image_path);
     }
     public function delete()
     {

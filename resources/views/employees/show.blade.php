@@ -8,11 +8,15 @@
                     <div class="card bg-white">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{asset('storage/'. $employee->image_path)}}" alt="Zdjęcie Pracownika"
-                                     class="rounded-circle" width="150">
-                                <div class="mt-2">
-                                    <h4>{{$employee->name}} {{$employee->surname}}</h4>
-                                </div>
+                                @if($employee->localFileExists())
+                                    <img src="{{asset('storage/'. $employee->image_path)}}" alt="Zdjęcie Pracownika"
+                                @else
+                                    <img src="{{$employee->image_path}}" alt="Zdjęcie Pracownika"
+                                         @endif
+                                         class="rounded-circle" width="150">
+                                    <div class="mt-2">
+                                        <h4>{{$employee->name}} {{$employee->surname}}</h4>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -89,11 +93,11 @@
                     <div class="card bg-white">
                         <div class="card-body row text-center">
                             @if($employee->hasContract())
-                            <div class="row border-bottom border-1">
-                                <h4 class="col-md-8">Szczegóły umowy</h4>
-                                <h4 class="col-md-4">Opis stanowiska</h4>
-                            </div>
-                            <div class="col-md-7 mt-3">
+                                <div class="row border-bottom border-1">
+                                    <h4 class="col-md-8">Szczegóły umowy</h4>
+                                    <h4 class="col-md-4">Opis stanowiska</h4>
+                                </div>
+                                <div class="col-md-7 mt-3">
                                     <div class="row mt-2 border-bottom border-1 pb-3">
                                         <div class="col-sm-6">
                                             <h6 class="mb-0">Typ umowy:</h6>
@@ -127,14 +131,14 @@
                                             {{$employee->contract->end_date}}
                                         </div>
                                     </div>
-                            </div>
-                            <div class="col-md-5 border-start border-1">
-                                <div class="row mt-4">
-                                    <div class="col-sm-12 text-start">
-                                        <p class="px-4">{{$employee->contract->contract_details}}</p>
+                                </div>
+                                <div class="col-md-5 border-start border-1">
+                                    <div class="row mt-4">
+                                        <div class="col-sm-12 text-start">
+                                            <p class="px-4">{{$employee->contract->contract_details}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @else
                                 <h4 class="text-danger"> Brak umowy !</h4>
                                 <a style="text-decoration: none;" href="{{route('contracts.create',$employee->id)}}">

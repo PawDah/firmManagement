@@ -47,5 +47,8 @@
                 <td>Brak pracowników w bazie</td>
             @endif
         </table>
+        <div class="d-flex justify-content-center">
+            {!! $employees->links() !!}
+        </div>
 @endsection
 

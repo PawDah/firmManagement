@@ -23,7 +23,11 @@
                     <tr>
                         <th scope="row">{{$contract->id}}</th>
                         <td>{{$contract->start_date}}</td>
-                        <td>{{$contract->end_date}}</td>
+                        @if($contract->end_date)
+                            <td>{{$contract->end_date}}</td>
+                        @else
+                            <td>Czas nieokreślony</td>
+                        @endif
                         <td>{{$contract->contract_type->name}}</td>
                         <td>{{$contract->employee->name}} {{$contract->employee->surname}}</td>
                         <td>
@@ -40,5 +44,8 @@
                 <td>Brak Umów w bazie</td>
             @endif
         </table>
+        <div class="d-flex justify-content-center">
+            {!! $contracts->links() !!}
+        </div>
 @endsection
 
