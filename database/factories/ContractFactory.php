@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Contract;
+use App\Models\ContractType;
 use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<Contract>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Contract>
  */
 class ContractFactory extends Factory
 {
