@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmployeePostRequest extends FormRequest
+class ContractPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,12 @@ class EmployeePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:50',
-            'surname' => 'required|max:50',
-            'phone_number' =>'max:11',
-            'email' => 'required|email',
-            'image'=>'nullable|image|mimes:jpg,png',
+            'contract_details' => 'required|max:500',
+            'payment_amount' => 'required|numeric|between:0,99999.99',
+            'start_date' => 'required|date',
+            'end_date' => 'date|nullable',
+            'employee_id' =>'integer|min:0',
+            'contract_type_id' => 'integer|min:0'
         ];
     }
 }

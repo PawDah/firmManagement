@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeesController;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function (){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('employees',EmployeesController::class);
+    Route::resource('contracts', ContractController::class);
+    Route::get('/contracts/create/{id}', [ContractController::class, 'create'])->name('contracts.create');
 });
 
 Auth::routes([
