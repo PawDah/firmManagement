@@ -22,6 +22,10 @@ class Employee extends Model
         'image_path',
     ];
 
+    public function hasImage_path(): bool
+    {
+        return isset($this->image_path);
+    }
     public function hasContract(): bool
     {
         return isset($this->contract);

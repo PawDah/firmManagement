@@ -8,7 +8,6 @@ use App\Models\ContractType;
 use App\Models\Employee;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class ContractController extends Controller
 {
@@ -18,16 +17,15 @@ class ContractController extends Controller
     public function index(): View
     {
         return view('contracts.index', [
-            'contracts' => Contract::paginate(10)
+            'contracts' => Contract::with('employee')->paginate(10)
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $employee_id): View
+    public function create(Employee $employee): View
     {
-        $employee = Employee::find($employee_id);
         return view('contracts.create', [
             'employee' => $employee,
             'contract_types' => ContractType::all()
@@ -39,7 +37,6 @@ class ContractController extends Controller
      */
     public function store(ContractPostRequest $request): RedirectResponse
     {
-
         $contract = new Contract($request->validated());
         $contract->save();
         return redirect(route('contracts.index'))->with('status', 'Umowa Dodana!');
@@ -71,24 +68,17 @@ class ContractController extends Controller
      */
     public function update(ContractPostRequest $request, Contract $contract)
     {
-        $contract->fill($request->validated());
-        $contract->save();
+        $contract->update($request->validated());
         return redirect(route('contracts.show',$contract->id))->with('status', 'Umowa edytowana!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Contract $contract)
     {
-        if (Contract::where('id',$id)->exists()) {
-            $contract = Contract::find($id);
             $contract->delete();
             return redirect(route('contracts.index'))->with('status','Umowa Usunięta!');
-        }
-        else{
-            return redirect(route('contracts.index'))->with('status','Umowa nieznaleziona!');
-        }
 
     }
 }

@@ -141,7 +141,7 @@
                                 </div>
                             @else
                                 <h4 class="text-danger"> Brak umowy !</h4>
-                                <a style="text-decoration: none;" href="{{route('contracts.create',$employee->id)}}">
+                                <a style="text-decoration: none;" href="{{route('contracts.create',$employee)}}">
                                     <button class="btn btn-info">
                                         Dodaj umowę dla pracownika
                                         <i class="fa-solid fa-pen-to-square"></i>
