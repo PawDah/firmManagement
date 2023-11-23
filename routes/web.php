@@ -22,7 +22,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('employees',EmployeesController::class);
     Route::resource('contracts', ContractController::class);
-    Route::get('/contracts/create/{id}', [ContractController::class, 'create'])->name('contracts.create');
+    Route::get('/contracts/create/{employee}', [ContractController::class, 'create'])->name('contracts.create.employee');
 });
 
 Auth::routes([

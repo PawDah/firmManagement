@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmployeePostRequest;
 use App\Models\Employee;
+use App\Services\EmployeeService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,7 @@ class EmployeesController extends Controller
     public function index(): View
     {
         return view('employees.index',[
-            'employees' => Employee::paginate(10)
+            'employees' => Employee::with('contract')->paginate(10)
 
         ]);
     }
@@ -33,13 +34,10 @@ class EmployeesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EmployeePostRequest $request): RedirectResponse
+    public function store(EmployeePostRequest $request,EmployeeService $employeeService): RedirectResponse
     {
-        $employee=new Employee($request->validated());
-        if ($request->hasFile('image')){
-            $employee->image_path=$request->file('image')->store('employees');
-        }
-        $employee->save();
+
+        $employeeService->store($request->validated());
         return redirect(route('employees.index'))->with('status','Użytkownik Dodany!');
     }
 
@@ -66,36 +64,19 @@ class EmployeesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeePostRequest $request, Employee $employee): RedirectResponse
+    public function update(EmployeePostRequest $request, Employee $employee,EmployeeService $employeeService): RedirectResponse
     {
-        $employee->fill($request->validated());
-        if ($request->hasFile('image')){
-            $oldImagePath = $employee->image_path;
-            if($oldImagePath){
-                if (Storage::exists($oldImagePath)) {
-                    Storage::delete($oldImagePath);
-                }
-            }
-            $employee->image_path=$request->file('image')->store('employees');
-        }
-
-            $employee->save();
+            $employeeService->update($request->validated(),$employee);
             return redirect(route('employees.index'))->with('status','Użytkownik edytowany!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(Employee $employee): RedirectResponse
     {
-        if (Employee::where('id',$id)->exists()) {
-            $employee = Employee::find($id);
             $employee->delete();
             return redirect(route('employees.index'))->with('status','Użytkownik Usunięty!');
-        }
-        else{
-            return redirect(route('employees.index'))->with('status','Użytkownik nieznaleziony!');
-        }
 
     }
 }
